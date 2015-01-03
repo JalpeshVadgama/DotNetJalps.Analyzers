@@ -41,7 +41,7 @@ namespace DotNetJalps.Analyzers.Test
     }";
             var expected = new DiagnosticResult
             {
-                Id = DotNetJalps.AnalyzersAnalyzer.DiagnosticId,
+                Id = MoveToNewFilesAnalyzer.DiagnosticId,
                 Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -71,12 +71,12 @@ namespace DotNetJalps.Analyzers.Test
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new DotNetJalps.AnalyzersCodeFixProvider();
+            return new MoveToNewFileCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new DotNetJalps.AnalyzersAnalyzer();
+            return new MoveToNewFilesAnalyzer();
         }
     }
 }

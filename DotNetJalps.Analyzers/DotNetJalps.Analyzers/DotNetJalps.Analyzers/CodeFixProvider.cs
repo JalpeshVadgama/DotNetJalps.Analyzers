@@ -16,11 +16,11 @@ using Microsoft.CodeAnalysis.Text;
 namespace DotNetJalps.Analyzers
 {
     [ExportCodeFixProvider("DotNetJalps.AnalyzersCodeFixProvider", LanguageNames.CSharp), Shared]
-    public class DotNetJalps.AnalyzersCodeFixProvider : CodeFixProvider
+    public class MoveToNewFileCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> GetFixableDiagnosticIds()
     {
-        return ImmutableArray.Create(DotNetJalps.AnalyzersAnalyzer.DiagnosticId);
+        return ImmutableArray.Create(MoveToNewFilesAnalyzer.DiagnosticId);
     }
 
     public sealed override FixAllProvider GetFixAllProvider()

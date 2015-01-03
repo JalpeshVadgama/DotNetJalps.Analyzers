@@ -11,36 +11,36 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace DotNetJalps.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class DotNetJalps.AnalyzersAnalyzer : DiagnosticAnalyzer
+    public class MoveToNewFilesAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "DotNetJalps.Analyzers";
-    internal const string Title = "Type name contains lowercase letters";
-    internal const string MessageFormat = "Type name '{0}' contains lowercase letters";
-    internal const string Category = "Naming";
+        public const string DiagnosticId = "Move to New file";
+        internal const string Title = "Move this type to new file";
+        internal const string MessageFormat = "Move this type '{0}' to new file";
+        internal const string Category = "Refactoring";
 
-    internal static DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true);
+        internal static DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true);
 
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
 
-    public override void Initialize(AnalysisContext context)
-    {
-        // TODO: Consider registering other actions that act on syntax instead of or in addition to symbols
-        context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
-    }
-
-    private static void AnalyzeSymbol(SymbolAnalysisContext context)
-    {
-        // TODO: Replace the following code with your own analysis, generating Diagnostic objects for any issues you find
-        var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
-
-        // Find just those named type symbols with names containing lowercase letters.
-        if (namedTypeSymbol.Name.ToCharArray().Any(char.IsLower))
+        public override void Initialize(AnalysisContext context)
         {
-            // For all such symbols, produce a diagnostic.
-            var diagnostic = Diagnostic.Create(Rule, namedTypeSymbol.Locations[0], namedTypeSymbol.Name);
+            // TODO: Consider registering other actions that act on syntax instead of or in addition to symbols
+            context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
+        }
 
-            context.ReportDiagnostic(diagnostic);
+        private static void AnalyzeSymbol(SymbolAnalysisContext context)
+        {
+            // TODO: Replace the following code with your own analysis, generating Diagnostic objects for any issues you find
+            var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
+
+            // Find just those named type symbols with names containing lowercase letters.
+            if (namedTypeSymbol.Name.ToCharArray().Any(char.IsLower))
+            {
+                // For all such symbols, produce a diagnostic.
+                var diagnostic = Diagnostic.Create(Rule, namedTypeSymbol.Locations[0], namedTypeSymbol.Name);
+
+                context.ReportDiagnostic(diagnostic);
+            }
         }
     }
-}
 }
